@@ -1,0 +1,77 @@
+{
+  "$schema": "https://schema.tauri.app/config/2.0.0",
+  "productName": "Origin",
+  "version": "0.1.0",
+  "identifier": "com.origin.system",
+  "build": {
+    "beforeDevCommand": "npm run dev",
+    "beforeBuildCommand": "npm run build",
+    "devUrl": "http://localhost:3000",
+    "frontendDist": "../dist"
+  },
+  "app": {
+    "windows": [
+      {
+        "label": "main",
+        "title": "Origin",
+        "url": "index.html",
+        "width": 1200,
+        "height": 820,
+        "minWidth": 680,
+        "minHeight": 480,
+        "transparent": true,
+        "decorations": false,
+        "alwaysOnTop": false,
+        "skipTaskbar": false,
+        "resizable": true,
+        "fullscreen": false,
+        "shadow": true,
+        "visible": false,
+        "center": true,
+        "dragDropEnabled": true
+      }
+    ],
+    "security": {
+      "csp": null
+    },
+    "trayIcon": {
+      "iconPath": "icons/icon.png",
+      "iconAsTemplate": false,
+      "menuOnLeftClick": false,
+      "tooltip": "Origin — Portable System"
+    }
+  },
+  "bundle": {
+    "active": true,
+    "targets": ["msi", "nsis"],
+    "icon": [
+      "icons/32x32.png",
+      "icons/128x128.png",
+      "icons/128x128@2x.png",
+      "icons/icon.icns",
+      "icons/icon.ico"
+    ],
+    "windows": {
+      "webviewInstallMode": {
+        "type": "embedBootstrapper"
+      },
+      "wix": {
+        "language": "en-US"
+      },
+      "nsis": {
+        "installerIcon": "icons/icon.ico",
+        "displayLanguageSelector": false,
+        "installMode": "currentUser",
+        "installerHooks": "installer.nsh"
+      }
+    },
+    "shortDescription": "Origin — Portable System",
+    "longDescription": "Sovereign portable ecosystem powered by FastAPI + React + Tauri",
+    "category": "Productivity"
+  },
+  "plugins": {
+    "shell": {
+      "open": true
+    }
+  }
+}

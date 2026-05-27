@@ -1,0 +1,95 @@
+# ══════════════════════════════════════════════════════════════
+# JARVIS .gitignore — Security-hardened
+# ══════════════════════════════════════════════════════════════
+
+# ── Secrets & Credentials (CRITICAL) ─────────────────────────
+.env
+.env.*
+!.env.example
+*.pem
+*.key
+*.cert
+*.p12
+*.pfx
+*.jks
+*credentials*
+*secret*
+.spotify_cache
+*.token
+*.tokens
+
+# ── Python ────────────────────────────────────────────────────
+venv/
+.venv/
+env/
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+.mypy_cache/
+.pytest_cache/
+.ruff_cache/
+dist/
+build/
+*.egg-info/
+*.egg
+.eggs/
+htmlcov/
+.coverage
+.tox/
+
+# ── Node / Frontend ──────────────────────────────────────────
+frontend/node_modules/
+frontend/dist/
+frontend/.cache/
+crucix/node_modules/
+crucix/runs/
+osiris/node_modules/
+osiris/.next/
+osiris/out/
+.npm/
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# ── Database ─────────────────────────────────────────────────
+*.db
+*.sqlite
+*.sqlite3
+
+# ── IDE ──────────────────────────────────────────────────────
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+.DS_Store
+Thumbs.db
+
+# ── JARVIS Runtime Data ──────────────────────────────────────
+data/audio/
+data/camera/
+data/screenshots/
+screenshots/
+data/memory/
+data/auth/
+data/chroma/
+data/telegram/
+data/security/
+data/proactive/
+data/services/
+data/workflows/
+data/voice_reference/
+data/*.db
+backups/
+logs/
+*.log
+metrics/history.jsonl
+
+# ── OS ───────────────────────────────────────────────────────
+desktop.ini
+$RECYCLE.BIN/
+
+# ── Embedded repos / temp ─────────────────────────────────────
+_temp_mark/
+claude-smart/

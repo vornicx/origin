@@ -1,0 +1,29 @@
+[tool.pytest.ini_options]
+asyncio_mode = "auto"
+testpaths = ["tests"]
+timeout = 60
+filterwarnings = [
+    "ignore::DeprecationWarning",
+    "ignore::PendingDeprecationWarning",
+]
+markers = [
+    "integration: marks tests that require a running LLM/DB environment",
+    "slow: marks tests that take longer than 10 seconds",
+]
+
+[tool.black]
+line-length = 120
+target-version = ["py311"]
+exclude = '''
+/(
+    venv
+  | \.uv-python
+  | frontend/node_modules
+  | \.git
+)/
+'''
+
+[tool.flake8]
+max-line-length = 120
+ignore = ["E203", "W503"]
+exclude = ["venv", ".uv-python", "frontend/node_modules", ".git"]

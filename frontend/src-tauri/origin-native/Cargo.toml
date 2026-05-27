@@ -1,0 +1,15 @@
+[package]
+name = "origin-native"
+version = "0.1.0"
+edition = "2021"
+description = "Native (C++) modules for Origin — exposed to Rust via cxx FFI"
+
+[lib]
+name = "origin_native"
+crate-type = ["rlib"]
+
+[dependencies]
+cxx = "1.0"
+
+[build-dependencies]
+cxx-build = "1.0"

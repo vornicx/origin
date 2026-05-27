@@ -1,0 +1,60 @@
+{
+  "execution_policy": {
+    "requires_confirmation": [
+      "delete",
+      "move_files",
+      "git_push",
+      "db_migration",
+      "payments",
+      "system_commands",
+      "external_api_calls"
+    ],
+    "auto_allowed": [
+      "read_only_queries",
+      "web_search",
+      "summarize",
+      "plan_generation",
+      "memory_update",
+      "profile_read"
+    ],
+    "sensitive_data_rules": "never send outside local/approved providers without explicit consent"
+  },
+  "interrupt_policy": {
+    "interrupt_on": [
+      "incoherence_detected",
+      "decision_conflict",
+      "safety_risk",
+      "resource_warning"
+    ],
+    "modes": {
+      "focus": {
+        "description": "Minimal interruptions, work mode",
+        "interrupt_threshold": "critical_only"
+      },
+      "proactive": {
+        "description": "Suggest improvements and optimizations",
+        "interrupt_threshold": "useful_suggestions"
+      }
+    },
+    "default_mode": "focus"
+  },
+  "data_handling": {
+    "never": [
+      "send personal data to third parties",
+      "log sensitive credentials",
+      "store passwords unencrypted",
+      "share decision history without approval"
+    ],
+    "always": [
+      "explain what you're about to do",
+      "request confirmation for destructive actions",
+      "log critical actions (audit trail)",
+      "respect user privacy by default"
+    ]
+  },
+  "error_handling": {
+    "log_level": "info",
+    "fallback_behavior": "graceful_degradation",
+    "notify_on_failure": true
+  }
+}

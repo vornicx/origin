@@ -1,0 +1,71 @@
+{
+  "$schema": "https://developer.microsoft.com/en-us/json-schemas/copilot/agent-manifest-schema.json",
+  "name": "Origin",
+  "description": "Personal AI assistant for Windows — desktop control, web search, file management, system monitoring, and voice interaction.",
+  "version": "0.3.0",
+  "publisher": {
+    "name": "Vadim Vornic",
+    "contact": "origin@local"
+  },
+  "capabilities": [
+    {
+      "name": "web_search",
+      "description": "Search the web via DuckDuckGo",
+      "mcp_tool": "web_search"
+    },
+    {
+      "name": "calculator",
+      "description": "Evaluate math expressions",
+      "mcp_tool": "calculator"
+    },
+    {
+      "name": "datetime",
+      "description": "Date/time queries and timezone conversion",
+      "mcp_tool": "datetime"
+    },
+    {
+      "name": "system_info",
+      "description": "OS, CPU, RAM, disk information",
+      "mcp_tool": "system_info"
+    },
+    {
+      "name": "external_apis",
+      "description": "Weather, crypto, exchange rates, translation",
+      "mcp_tool": "external_apis"
+    },
+    {
+      "name": "file_manager",
+      "description": "Read files and list directories (read-only)",
+      "mcp_tool": "file_manager"
+    }
+  ],
+  "mcp_endpoints": [
+    {
+      "url": "http://localhost:9001/mcp",
+      "protocol": "modelcontextprotocol",
+      "version": "2025-03-26"
+    }
+  ],
+  "triggers": [
+    {
+      "type": "command",
+      "command": "@origin",
+      "description": "Activate Origin assistant"
+    },
+    {
+      "type": "command",
+      "command": "@j",
+      "description": "Short alias for Origin"
+    }
+  ],
+  "security": {
+    "authentication": "none",
+    "runs_in_sandbox": false,
+    "local_only": true,
+    "requires_confirmation": [
+      "shell", "restart", "shutdown", "delete", "git_push", "db_migration"
+    ]
+  },
+  "icon_url": "http://localhost:9001/favicon.ico",
+  "support_url": "http://localhost:9001"
+}

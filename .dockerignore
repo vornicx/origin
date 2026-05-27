@@ -1,0 +1,16 @@
+venv/
+frontend/node_modules/
+frontend/dist/
+.git/
+.github/
+__pycache__/
+*.pyc
+*.pyo
+.env
+.env.example
+data/
+screenshots/
+*.log
+.gitignore
+README.md
+MANUAL.md
