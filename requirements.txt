@@ -41,7 +41,7 @@ aiohttp==3.9.1
 
 # Web Scraping
 beautifulsoup4==4.12.2
-lxml==4.9.4
+lxml==6.1.1
 
 # System Monitoring
 psutil==5.9.7
