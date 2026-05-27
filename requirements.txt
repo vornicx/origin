@@ -32,7 +32,7 @@ chromadb>=1.5.0
 
 # Utilities
 pydantic==2.5.0
-pydantic-settings==2.1.0
+pydantic-settings==2.14.1
 python-multipart==0.0.6
 websockets==12.0
 
