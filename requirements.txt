@@ -47,7 +47,7 @@ lxml==4.9.4
 psutil==5.9.7
 
 # Voice (TTS + STT)
-edge-tts==6.1.9
+edge-tts==7.2.8
 SpeechRecognition==3.10.1
 PyAudio==0.2.14
 faster-whisper==1.0.3
