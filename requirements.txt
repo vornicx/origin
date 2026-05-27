@@ -87,7 +87,7 @@ PyGetWindow>=0.0.9
 keyboard>=0.13.5
 
 # Screen Capture (skills/vision_skill.py)
-mss>=9.0.0
+mss>=10.2.0
 
 # System Tray (skills/system_tray_skill.py)
 pystray>=0.19.5
