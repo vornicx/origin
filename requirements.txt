@@ -14,7 +14,7 @@ starlette==0.27.0
 # Database
 sqlalchemy==2.0.23
 psycopg2-binary==2.9.9
-alembic==1.12.1
+alembic==1.18.4
 pgvector==0.2.4
 
 # LLM Integrations
