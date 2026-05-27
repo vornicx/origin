@@ -14,7 +14,7 @@ jobs:
       bandit_issues: ${{ steps.bandit.outputs.issues }}
 
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v6
 
       - name: Set up Python
         uses: actions/setup-python@v5
@@ -67,7 +67,7 @@ jobs:
       coverage_pct: ${{ steps.cov.outputs.pct }}
 
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v6
 
       - name: Set up Python
         uses: actions/setup-python@v5
@@ -103,7 +103,7 @@ jobs:
     needs: [security-audit, coverage]
 
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v6
         with:
           fetch-depth: 0
 
@@ -146,7 +146,7 @@ jobs:
       needs.security-audit.outputs.bandit_issues != '0'
 
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v6
 
       - name: Create regression issue
         uses: actions/github-script@v7
