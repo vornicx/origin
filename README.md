@@ -1,103 +1,170 @@
-# Origin - Just A Rather Very Intelligent System
+# Origin — AI Desktop Assistant
 
-Un asistente de IA personal técnico, multimodal y adaptativo. Construcción desde cero con arquitectura de Mente-Cuerpo-Interfaz.
+A personal, multimodal, and adaptive AI assistant for Windows. Built from scratch with a Mind-Body-Interface architecture.
 
-## 📐 Arquitectura
+## Architecture
 
 ```
 ┌─────────────────────────────────────┐
-│  INTERFAZ (TypeScript/React)        │
+│  INTERFACE (TypeScript/React/Tauri) │
 │  Chat + Control Panel               │
 └──────────────┬──────────────────────┘
                │ WebSocket / REST
 ┌──────────────▼──────────────────────┐
 │  API (Python/FastAPI)               │
-│  Orquestación de rutas              │
+│  Route orchestration · Port 9001    │
 └──────────────┬──────────────────────┘
                │
 ┌──────────────▼──────────────────────┐
-│  MENTE (Python Core)                │
-│  Reasoning Loop + Memoria           │
-│  int → plan → act → check → save    │
+│  MIND (Python Core)                 │
+│  Reasoning Loop + Memory            │
+│  intent → plan → act → check → save │
 └──────────────┬──────────────────────┘
                │
     ┌──────────┴──────────┐
     │                     │
-┌───▼────┐          ┌────▼────┐
-│ Skills │          │ LLM      │
-│ Cuerpo │          │ Router   │
+┌───▼────┐          ┌─────▼────┐
+│ Skills │          │  LLM     │
+│  (43+) │          │  Router  │
 └────────┘          └──────────┘
 ```
 
-## 🗂 Estructura del Proyecto
+## Project Structure
 
-- `core/` - Mente de Origin (Python)
-- `skills/` - Habilidades/Agentes del Cuerpo
-- `api/` - Backend FastAPI
-- `db/` - Modelos y migrations PostgreSQL
-- `frontend/` - UI React/TypeScript
-- `config/` - Configuración (perfiles, políticas)
-- `tests/` - Tests unitarios
+| Directory | Description |
+|---|---|
+| `core/` | Mind: reasoning loop, memory, auth, cache |
+| `skills/` | 43+ skills (OS control, vision, voice, web…) |
+| `api/` | FastAPI backend with versioned `/v1/` router |
+| `db/` | SQLAlchemy models + Alembic migrations (PostgreSQL/pgvector) |
+| `frontend/` | React 18 + TypeScript + Tauri 2 desktop app |
+| `tests/` | 118+ unit & integration tests |
+| `scripts/` | DB backup, quality metrics, smoke tests |
+| `.github/` | CI/CD + weekly security audit + Dependabot |
 
-## 🚀 Quick Start
+## Quick Start
 
 ```bash
-# Setup
+# Clone and set up Python environment
 python -m venv venv
-source venv/bin/activate  # o venv\Scripts\activate en Windows
+venv\Scripts\activate          # Windows
 pip install -r requirements.txt
 
+# Configure environment
+cp .env.example .env
+# Fill in your keys (see Configuration below)
+
 # Database
-psql -U postgres -c "CREATE DATABASE origin_db;"
+psql -U postgres -c "CREATE DATABASE origin;"
 alembic upgrade head
 
-# Run API
-uvicorn api.main:app --reload
+# Start API
+uvicorn api.main:app --reload --port 9001
 
-# Run Frontend (otra terminal)
+# Start frontend (separate terminal)
 cd frontend && npm install && npm run dev
 ```
 
-## ⚙️ Configuración
-
-### Variables de entorno (`.env`)
-
-Copia `.env.example` a `.env` y rellena tus claves:
-
-```
-DEEPSEEK_API_KEY=...
-ORIGIN_JWT_SECRET=<genera con: python -c "import secrets; print(secrets.token_hex(32))">
-DATABASE_URL=postgresql://user:password@localhost/origin_db
-LOG_FORMAT=json   # activa logging estructurado en producción
-```
-
-### Despliegue con Docker
+Or with Docker (recommended):
 
 ```bash
 docker compose up -d
 ```
 
-Levanta: API (9001) + PostgreSQL/pgvector + Crucix (3117) + Osiris (3000).
+Starts: API (9001) · PostgreSQL/pgvector · Redis · Crucix (3117) · Osiris (3000)
 
-### Perfil de Usuario
-`config/profiles.json` - Datos, estilos, preferencias de Vadim
+## Configuration
 
-### Política de Ejecución
-`config/policy.json` - Límites, confirmaciones, reglas de seguridad
+Copy `.env.example` to `.env` and fill in your keys:
 
-## 🧠 Reasoning Loop
+```env
+# LLM providers (at least one required)
+DEEPSEEK_API_KEY=
+GROQ_API_KEY=
+GEMINI_API_KEY=
+ANTHROPIC_API_KEY=
 
-1. **Intent** → Parsear intención + tipo de skill
-2. **Plan** → Generar 1-5 pasos
-3. **Act** → Ejecutar skills/subagentes
-4. **Check** → Auto-revisar resultado
-5. **Save** → Guardar aprendizajes en memoria
-6. **Answer** → Responder a usuario
+# Security (required)
+ORIGIN_JWT_SECRET=        # python -c "import secrets; print(secrets.token_hex(32))"
 
-## 🔒 Seguridad
+# Database
+DATABASE_URL=postgresql://postgres:postgres@localhost/origin
 
-Ver [SECURITY.md](SECURITY.md) para el proceso de reporte de vulnerabilidades y la checklist de hardening antes del despliegue.
+# Optional
+REDIS_URL=redis://localhost:6379
+LOG_FORMAT=json           # structured JSON logging for production
+TELEGRAM_BOT_TOKEN=
+```
+
+## LLM Router
+
+Origin routes requests across multiple providers automatically:
+
+| Provider | Models | Use case |
+|---|---|---|
+| DeepSeek | deepseek-chat | Default reasoning |
+| Groq | llama3, mixtral | Fast responses |
+| Gemini | gemini-pro | Multimodal |
+| Claude | claude-3-* | Complex tasks |
+| Ollama | any local model | Offline / privacy |
+
+## Reasoning Loop
+
+Every request goes through a 6-step loop:
+
+1. **Intent** — parse intent and skill type
+2. **Plan** — generate 1–5 execution steps
+3. **Act** — execute skills / sub-agents
+4. **Check** — auto-review result quality
+5. **Save** — persist learnings to memory
+6. **Answer** — respond to the user
+
+## Skills
+
+43+ built-in skills including:
+
+- **OS Control** — window management, processes, shell commands
+- **Vision** — screenshot capture and analysis
+- **Voice** — wake word detection, speech synthesis
+- **Web** — search, scraping, browser automation
+- **Self-Improvement** — background loop that scans logs, detects bugs, and applies LLM-generated fixes every 5 minutes
+- **Telegram**, **Camera**, **Clipboard**, **Scheduler**, **Reminders**, and more
+
+## Security
+
+- HMAC-SHA256 token auth + bcrypt password hashing
+- Path traversal prevention on all file operations
+- Content Security Policy headers
+- Prompt injection guard
+- GDPR endpoints: `GET /auth/export`, `DELETE /auth/account`
+- Weekly automated CVE scan (pip-audit + bandit) via GitHub Actions
+- Dependabot for automatic dependency security updates
+
+See [SECURITY.md](SECURITY.md) for the vulnerability reporting process and hardening checklist.
+
+## Continuous Quality
+
+```
+In-process   → SelfImprovement skill runs every 5 min
+On push      → CI: lint + type check + 118 tests + pip-audit
+Weekly       → Scheduled audit: CVE scan + bandit + coverage + metrics snapshot
+Automated    → Dependabot opens PRs for security patches (pip, npm, Actions)
+```
+
+Quality metrics are tracked over time in `metrics/history.jsonl` via `scripts/quality_metrics.py`.
+
+## Stack
+
+| Layer | Technology |
+|---|---|
+| Backend | Python 3.11, FastAPI 0.104, Uvicorn |
+| Database | PostgreSQL 16 + pgvector, SQLAlchemy 2.0, Alembic |
+| Cache | Redis 7 (in-process TTL dict fallback) |
+| Frontend | React 18, TypeScript 5.2, Vite, Tauri 2.1 |
+| Auth | HMAC-SHA256 tokens, bcrypt |
+| Tests | pytest, pytest-asyncio, Vitest, k6 |
+| Infra | Docker Compose, GitHub Actions |
 
 ---
 
-**Status**: Beta — arquitectura completa, hardening de seguridad aplicado, tests pasando.
+**Status:** Beta — full architecture implemented, security hardening applied, 118 tests passing.
