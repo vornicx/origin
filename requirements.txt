@@ -57,7 +57,7 @@ webrtcvad-wheels==2.0.14
 winotify==1.1.0
 
 # Spotify Integration (optional)
-spotipy==2.23.0
+spotipy==2.26.0
 
 # Image Processing (for screenshots)
 Pillow==10.1.0
