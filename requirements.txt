@@ -79,7 +79,7 @@ pytest-asyncio==0.21.1
 pywin32>=306
 
 # Computer Vision (skills/camera_skill.py, skills/custom_vision_skill.py)
-opencv-python>=4.8.0
+opencv-python>=4.13.0.92
 
 # UI Automation (skills/ui_automation_skill.py)
 pyautogui>=0.9.54
